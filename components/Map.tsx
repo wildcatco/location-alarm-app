@@ -1,8 +1,7 @@
 import React from 'react';
 import MapView from 'react-native-maps';
 import { PROVIDER_GOOGLE } from 'react-native-maps';
-import { ActivityIndicator, StyleSheet } from 'react-native';
-import useCurrentPosition from '../hooks/useCurrentPosition';
+import { StyleSheet } from 'react-native';
 import { Position } from '../types/position';
 
 interface MapProps {
