@@ -1,10 +1,6 @@
 import { useState, useEffect } from 'react';
 import * as Location from 'expo-location';
-
-interface Position {
-  latitude: number;
-  longitude: number;
-}
+import { Position } from '../types/position';
 
 export default function useCurrentPosition() {
   const [currentPosition, setCurrentPosition] = useState<Position | null>(null);

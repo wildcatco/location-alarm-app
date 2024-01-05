@@ -3,20 +3,19 @@ import MapView from 'react-native-maps';
 import { PROVIDER_GOOGLE } from 'react-native-maps';
 import { ActivityIndicator, StyleSheet } from 'react-native';
 import useCurrentPosition from '../hooks/useCurrentPosition';
+import { Position } from '../types/position';
 
-export default function Map() {
-  const currentPosition = useCurrentPosition();
+interface MapProps {
+  initialPosition: Position;
+}
 
-  if (!currentPosition) {
-    return <ActivityIndicator size='large' />;
-  }
-
+export default function Map({ initialPosition }: MapProps) {
   return (
     <MapView
       style={styles.map}
       initialRegion={{
-        latitude: currentPosition.latitude,
-        longitude: currentPosition.longitude,
+        latitude: initialPosition.latitude,
+        longitude: initialPosition.longitude,
         latitudeDelta: 0.07,
         longitudeDelta: 0.07,
       }}
@@ -31,7 +30,7 @@ export default function Map() {
 
 const styles = StyleSheet.create({
   map: {
+    flex: 1,
     width: '100%',
-    height: '100%',
   },
 });
