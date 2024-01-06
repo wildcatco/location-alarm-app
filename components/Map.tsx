@@ -6,9 +6,10 @@ import { Position } from '../types/position';
 
 interface MapProps {
   initialPosition: Position;
+  position: Position | null;
 }
 
-export default function Map({ initialPosition }: MapProps) {
+export default function Map({ initialPosition, position }: MapProps) {
   return (
     <MapView
       style={styles.map}
@@ -18,6 +19,16 @@ export default function Map({ initialPosition }: MapProps) {
         latitudeDelta: 0.07,
         longitudeDelta: 0.07,
       }}
+      region={
+        position
+          ? {
+              latitude: position.latitude,
+              longitude: position.longitude,
+              latitudeDelta: 0.01,
+              longitudeDelta: 0.01,
+            }
+          : undefined
+      }
       provider={PROVIDER_GOOGLE}
       followsUserLocation={true}
       showsCompass={false}

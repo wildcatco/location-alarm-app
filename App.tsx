@@ -5,13 +5,16 @@ import Map from './components/Map';
 import Header from './components/Header';
 import useCurrentPosition from './hooks/useCurrentPosition';
 import AddAlarm from './components/AddAlarm';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useState } from 'react';
 import AlarmList from './components/AlarmList';
+import { Position } from './types/position';
 
 export default function App() {
   const [showAlarmList, setShowAlarmList] = useState(false);
   const [showAddAlarm, setShowAddAlarm] = useState(false);
+  const [searchedLocation, setSearchedLocation] = useState<Position | null>(
+    null
+  );
 
   const currentPosition = useCurrentPosition();
 
@@ -37,26 +40,36 @@ export default function App() {
     setShowAddAlarm(false);
   };
 
+  const handleSearch = (position: Position) => {
+    setSearchedLocation(position);
+    setShowAddAlarm(false);
+  };
+
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <SafeAreaProvider>
-        <StatusBar style='auto' />
-        <SafeAreaView style={styles.container}>
-          {!currentPosition && <ActivityIndicator size='large' />}
-          {currentPosition && (
-            <>
-              <Header
-                onListClick={handleOpenAlarmList}
-                onAddClick={handleOpenAddAlarm}
-              />
-              <Map initialPosition={currentPosition} />
-              {showAlarmList && <AlarmList onClose={handleCloseAlarmList} />}
-              {showAddAlarm && <AddAlarm onClose={handleCloseAddAlarm} />}
-            </>
-          )}
-        </SafeAreaView>
-      </SafeAreaProvider>
-    </GestureHandlerRootView>
+    <SafeAreaProvider>
+      <StatusBar style='auto' />
+      <SafeAreaView style={styles.container}>
+        {!currentPosition && <ActivityIndicator size='large' />}
+        {currentPosition && (
+          <>
+            <Header
+              onListClick={handleOpenAlarmList}
+              onAddClick={handleOpenAddAlarm}
+            />
+            <Map
+              initialPosition={currentPosition}
+              position={searchedLocation}
+            />
+            <AlarmList isOpen={showAlarmList} onClose={handleCloseAlarmList} />
+            <AddAlarm
+              isOpen={showAddAlarm}
+              onSearch={handleSearch}
+              onClose={handleCloseAddAlarm}
+            />
+          </>
+        )}
+      </SafeAreaView>
+    </SafeAreaProvider>
   );
 }
 
