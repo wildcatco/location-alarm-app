@@ -105,17 +105,6 @@ export default function App() {
     setSearchedLocation(null);
   };
 
-  const handleToggleActivation = (id: string) => {
-    setAlarmList((currentAlarmList) =>
-      currentAlarmList.map((alarm) => {
-        if (alarm.id === id) {
-          return { ...alarm, activated: !alarm.activated };
-        }
-        return alarm;
-      })
-    );
-  };
-
   return (
     <SafeAreaProvider>
       <StatusBar style='auto' />
@@ -135,7 +124,6 @@ export default function App() {
               alarmList={alarmList}
               isOpen={showAlarmList}
               onClose={handleCloseAlarmList}
-              onToggleActivation={handleToggleActivation}
             />
             <AddAlarm
               isOpen={showAddAlarm}

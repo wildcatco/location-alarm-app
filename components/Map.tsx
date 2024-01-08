@@ -1,6 +1,5 @@
 import React from 'react';
-import MapView from 'react-native-maps';
-import { PROVIDER_GOOGLE } from 'react-native-maps';
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { StyleSheet } from 'react-native';
 import { Position } from '../types/position';
 
@@ -34,7 +33,11 @@ export default function Map({ initialPosition, position }: MapProps) {
       showsCompass={false}
       showsUserLocation
       showsMyLocationButton
-    />
+    >
+      {position && (
+        <Marker coordinate={position} title='test' description='des' />
+      )}
+    </MapView>
   );
 }
 

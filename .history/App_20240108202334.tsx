@@ -23,7 +23,6 @@ export type Alarm = {
   position: Position;
   radius: number;
   title: string;
-  activated: boolean;
 };
 
 export default function App() {
@@ -99,21 +98,9 @@ export default function App() {
       title: searchedLocation.name,
       position: searchedLocation.position,
       radius: selectedRadius,
-      activated: true,
     };
     setAlarmList((currentAlarmList) => [...currentAlarmList, newAlarm]);
     setSearchedLocation(null);
-  };
-
-  const handleToggleActivation = (id: string) => {
-    setAlarmList((currentAlarmList) =>
-      currentAlarmList.map((alarm) => {
-        if (alarm.id === id) {
-          return { ...alarm, activated: !alarm.activated };
-        }
-        return alarm;
-      })
-    );
   };
 
   return (
@@ -135,7 +122,6 @@ export default function App() {
               alarmList={alarmList}
               isOpen={showAlarmList}
               onClose={handleCloseAlarmList}
-              onToggleActivation={handleToggleActivation}
             />
             <AddAlarm
               isOpen={showAddAlarm}

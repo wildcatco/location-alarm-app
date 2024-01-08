@@ -105,16 +105,7 @@ export default function App() {
     setSearchedLocation(null);
   };
 
-  const handleToggleActivation = (id: string) => {
-    setAlarmList((currentAlarmList) =>
-      currentAlarmList.map((alarm) => {
-        if (alarm.id === id) {
-          return { ...alarm, activated: !alarm.activated };
-        }
-        return alarm;
-      })
-    );
-  };
+  const handleToggleActivation = (id: string) => {};
 
   return (
     <SafeAreaProvider>

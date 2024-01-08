@@ -1,4 +1,3 @@
-import 'react-native-get-random-values';
 import { StatusBar } from 'expo-status-bar';
 import {
   StyleSheet,
@@ -16,23 +15,19 @@ import { useState } from 'react';
 import AlarmList from './components/AlarmList';
 import { Position } from './types/position';
 import DropDownPicker from 'react-native-dropdown-picker';
-import { nanoid } from 'nanoid';
 
 export type Alarm = {
-  id: string;
   position: Position;
   radius: number;
   title: string;
-  activated: boolean;
 };
 
 export default function App() {
   const [showAlarmList, setShowAlarmList] = useState(false);
   const [showAddAlarm, setShowAddAlarm] = useState(false);
-  const [searchedLocation, setSearchedLocation] = useState<{
-    position: Position;
-    name: string;
-  } | null>(null);
+  const [searchedLocation, setSearchedLocation] = useState<Position | null>(
+    null
+  );
   const [selectedRadius, setSelectedRadius] = useState<number>(50);
   const [radiusOptions, setRadiusOptions] = useState([
     { label: '50미터', value: 50 },
@@ -67,17 +62,8 @@ export default function App() {
     setShowAddAlarm(false);
   };
 
-  const handleSearch = ({
-    position,
-    name,
-  }: {
-    position: Position;
-    name: string;
-  }) => {
-    setSearchedLocation({
-      position,
-      name,
-    });
+  const handleSearch = (position: Position) => {
+    setSearchedLocation(position);
     setShowAddAlarm(false);
   };
 
@@ -95,25 +81,12 @@ export default function App() {
     }
 
     const newAlarm: Alarm = {
-      id: nanoid(),
-      title: searchedLocation.name,
-      position: searchedLocation.position,
+      title: 'test',
+      position: searchedLocation,
       radius: selectedRadius,
-      activated: true,
     };
     setAlarmList((currentAlarmList) => [...currentAlarmList, newAlarm]);
     setSearchedLocation(null);
-  };
-
-  const handleToggleActivation = (id: string) => {
-    setAlarmList((currentAlarmList) =>
-      currentAlarmList.map((alarm) => {
-        if (alarm.id === id) {
-          return { ...alarm, activated: !alarm.activated };
-        }
-        return alarm;
-      })
-    );
   };
 
   return (
@@ -129,13 +102,12 @@ export default function App() {
             />
             <Map
               initialPosition={currentPosition}
-              position={searchedLocation?.position || null}
+              position={searchedLocation}
             />
             <AlarmList
               alarmList={alarmList}
               isOpen={showAlarmList}
               onClose={handleCloseAlarmList}
-              onToggleActivation={handleToggleActivation}
             />
             <AddAlarm
               isOpen={showAddAlarm}

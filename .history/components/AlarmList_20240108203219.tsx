@@ -30,7 +30,7 @@ export default function AlarmList({
                   <Text>({alarm.radius}미터)</Text>
                 </View>
                 <Switch
-                  value={alarm.activated}
+                  value={true}
                   onChange={() => onToggleActivation(alarm.id)}
                 />
               </View>

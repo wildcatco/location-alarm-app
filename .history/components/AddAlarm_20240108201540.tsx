@@ -42,6 +42,8 @@ export default function AddAlarm({ isOpen, onSearch, onClose }: AddAlarmProps) {
               }}
               onPress={(data, details) => {
                 if (details) {
+                  console.log(details.name);
+
                   onSearch({
                     position: {
                       latitude: details.geometry.location.lat,

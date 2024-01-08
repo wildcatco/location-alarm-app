@@ -6,14 +6,12 @@ interface AlarmListProps {
   alarmList: Alarm[];
   isOpen: boolean;
   onClose: () => void;
-  onToggleActivation: (id: string) => void;
 }
 
 export default function AlarmList({
   alarmList,
   isOpen,
   onClose,
-  onToggleActivation,
 }: AlarmListProps) {
   return (
     <Modal visible={isOpen} animationType='slide'>
@@ -25,14 +23,11 @@ export default function AlarmList({
           <View>
             {alarmList.map((alarm) => (
               <View key={alarm.id} style={styles.alarm}>
-                <View style={styles.alarmInfo}>
+                <View>
                   <Text style={styles.alarmName}>{alarm.title}</Text>
                   <Text>({alarm.radius}미터)</Text>
                 </View>
-                <Switch
-                  value={alarm.activated}
-                  onChange={() => onToggleActivation(alarm.id)}
-                />
+                <Switch value={alarm.activated} />
               </View>
             ))}
           </View>
@@ -55,7 +50,6 @@ const styles = StyleSheet.create({
   alarm: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
   },
   alarmInfo: {
     flexDirection: 'row',

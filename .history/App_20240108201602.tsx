@@ -1,4 +1,3 @@
-import 'react-native-get-random-values';
 import { StatusBar } from 'expo-status-bar';
 import {
   StyleSheet,
@@ -16,14 +15,11 @@ import { useState } from 'react';
 import AlarmList from './components/AlarmList';
 import { Position } from './types/position';
 import DropDownPicker from 'react-native-dropdown-picker';
-import { nanoid } from 'nanoid';
 
 export type Alarm = {
-  id: string;
   position: Position;
   radius: number;
   title: string;
-  activated: boolean;
 };
 
 export default function App() {
@@ -69,14 +65,14 @@ export default function App() {
 
   const handleSearch = ({
     position,
-    name,
+    description,
   }: {
     position: Position;
-    name: string;
+    description: string;
   }) => {
     setSearchedLocation({
       position,
-      name,
+      name: description,
     });
     setShowAddAlarm(false);
   };
@@ -95,25 +91,12 @@ export default function App() {
     }
 
     const newAlarm: Alarm = {
-      id: nanoid(),
-      title: searchedLocation.name,
+      title: 'test',
       position: searchedLocation.position,
       radius: selectedRadius,
-      activated: true,
     };
     setAlarmList((currentAlarmList) => [...currentAlarmList, newAlarm]);
     setSearchedLocation(null);
-  };
-
-  const handleToggleActivation = (id: string) => {
-    setAlarmList((currentAlarmList) =>
-      currentAlarmList.map((alarm) => {
-        if (alarm.id === id) {
-          return { ...alarm, activated: !alarm.activated };
-        }
-        return alarm;
-      })
-    );
   };
 
   return (
@@ -135,7 +118,6 @@ export default function App() {
               alarmList={alarmList}
               isOpen={showAlarmList}
               onClose={handleCloseAlarmList}
-              onToggleActivation={handleToggleActivation}
             />
             <AddAlarm
               isOpen={showAddAlarm}

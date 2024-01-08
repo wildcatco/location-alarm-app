@@ -12,7 +12,7 @@ import { Position } from '../types/position';
 
 interface AddAlarmProps {
   isOpen: boolean;
-  onSearch: (props: { position: Position; name: string }) => void;
+  onSearch: (props: { position: Position; description: string }) => void;
   onClose: () => void;
 }
 
@@ -43,11 +43,8 @@ export default function AddAlarm({ isOpen, onSearch, onClose }: AddAlarmProps) {
               onPress={(data, details) => {
                 if (details) {
                   onSearch({
-                    position: {
-                      latitude: details.geometry.location.lat,
-                      longitude: details.geometry.location.lng,
-                    },
-                    name: details.name,
+                    latitude: details.geometry.location.lat,
+                    longitude: details.geometry.location.lng,
                   });
                 }
               }}
