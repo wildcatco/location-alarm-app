@@ -7,7 +7,6 @@ interface AlarmListProps {
   isOpen: boolean;
   onClose: () => void;
   onToggleActivation: (id: string) => void;
-  onDeleteAlarm: (id: string) => void;
 }
 
 export default function AlarmList({
@@ -15,7 +14,6 @@ export default function AlarmList({
   isOpen,
   onClose,
   onToggleActivation,
-  onDeleteAlarm,
 }: AlarmListProps) {
   return (
     <Modal visible={isOpen} animationType='slide'>
@@ -35,13 +33,8 @@ export default function AlarmList({
                   <Switch
                     value={alarm.activated}
                     onChange={() => onToggleActivation(alarm.id)}
-                    style={styles.alarmToggle}
                   />
-                  <Button
-                    title='삭제'
-                    color='#ff5353'
-                    onPress={() => onDeleteAlarm(alarm.id)}
-                  />
+                  <Button title='삭제' color='#ff5353' />
                 </View>
               </View>
             ))}
@@ -73,11 +66,7 @@ const styles = StyleSheet.create({
   alarmName: {
     marginRight: 8,
   },
-  alarmToggle: {
-    marginRight: 8,
-  },
   alarmControl: {
     flexDirection: 'row',
-    alignItems: 'center',
   },
 });
